@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle ion-button icon-only>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+<!--    
+    <ion-buttons end>
+      <button (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+-->        
+    <ion-title>Current Todos</ion-title>
+    Connected to Firebase? {{isConnectedToFirebase$ | async}}
+  <button ion-button [disabled]="isConnectedToFirebase$ | async" (click)="connectToFirebase()">Connect to Firebase</button>
+  <button ion-button [disabled]="!(isConnectedToFirebase$ | async)" (click)="disconnectFromFirebase()">Disconnect from Firebase</button>
+    
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <todo-list 
+      [todos]="todos$ | async" 
+      (addItem)="addItem($event)"     
+      (editItem)="editItem($event)"
+      (reorderItems)="reorderItems($event)"
+      (removeItem)="removeItem($event)"      
+  ></todo-list>
+
+
+</ion-content>

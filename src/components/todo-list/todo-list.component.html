@@ -1,0 +1,22 @@
+<ion-fab bottom right edge>
+<button ion-fab color=primary (click)="addItem.emit()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>
+
+<ion-list reorder="true" (ionItemReorder)="reorderItems.emit($event)">
+  <ion-item-sliding *ngFor="let item of todos">
+    <button ion-item (click)="editItem.emit(item)">
+      <div [style.text-decoration]="item.isComplete ? 'line-through': ''">
+        <h3>{{item.name}} - {{item.isComplete}}</h3> 
+        <p>{{item.description}}</p>
+      </div>
+    </button>
+
+    <ion-item-options>
+      <button ion-button color="danger" (click)="removeItem.emit(item)">
+            Remove
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
