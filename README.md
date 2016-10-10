@@ -1,5 +1,21 @@
-# todo
-A todo program with ionic2, ngrx and angularfire.
+An Ionic todo app for testing sync between localstorage and firebase using ngrx.
+
+## my-firebase-app-config.ts
+Add to src folder.
+``` typescript
+import {
+    FirebaseAppConfig
+} from 'angularfire2';
+
+export class MyFirebaseAppConfig {
+    static config: FirebaseAppConfig = {
+    apiKey: 'xxxxx',
+    authDomain: 'xxxxx',
+    databaseURL: 'xxxxx',
+    storageBucket: 'xxxxxx''
+  };
+}
+```
 
 ## Startup - Basic, no sync
 ```
