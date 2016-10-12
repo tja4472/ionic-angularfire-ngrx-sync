@@ -30,21 +30,21 @@ export class ToDoEffects {
     ) { }
 
     @Effect() offlineCreate$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.LOCAL_CREATE)
+        .ofType(TodoActions.ActionTypes.LOCAL_CREATE)
         .map(action => {
             let firebaseAction = new TodoActions.FirebaseCreateAction(action.payload);
             return new AppFirebaseActions.CreateOfflineAction(firebaseAction);
         })
 
     @Effect() offlineDelete$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.LOCAL_DELETE)
+        .ofType(TodoActions.ActionTypes.LOCAL_DELETE)
         .map(action => {
             let firebaseAction = new TodoActions.FirebaseDeleteAction(action.payload);
             return new AppFirebaseActions.CreateOfflineAction(firebaseAction);
         })
 
     @Effect() offlineUpdate$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.LOCAL_UPDATE)
+        .ofType(TodoActions.ActionTypes.LOCAL_UPDATE)
         .map(action => {
             let firebaseAction = new TodoActions.FirebaseUpdateAction(action.payload);
             return new AppFirebaseActions.CreateOfflineAction(firebaseAction);
@@ -52,16 +52,16 @@ export class ToDoEffects {
 
     // AppFirebaseActions - start
     @Effect() firebaseDisconnectSuccess$ = this.actions$
-        .ofType(AppFirebaseActions.AppFirebaseActionTypes.FIREBASE_DISCONNECT_SUCCESS)
+        .ofType(AppFirebaseActions.ActionTypes.FIREBASE_DISCONNECT_SUCCESS)
         .map(() => new TodoActions.FirebaseLoadCancelAction());
 
     @Effect() firebaseConnectSuccess$ = this.actions$
-        .ofType(AppFirebaseActions.AppFirebaseActionTypes.FIREBASE_SYNC_SUCCESS)
+        .ofType(AppFirebaseActions.ActionTypes.FIREBASE_SYNC_SUCCESS)
         .map(() => new TodoActions.FirebaseLoadAction());
     // AppFirebaseActions - end
 
     @Effect() itemCreateFirebase$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEM_CREATE)
+        .ofType(TodoActions.ActionTypes.ITEM_CREATE)
         .withLatestFrom(this.state$)
         .filter(([, state]) => state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -69,7 +69,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.FirebaseCreateAction(payload));
 
     @Effect() itemCreateLocal$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEM_CREATE)
+        .ofType(TodoActions.ActionTypes.ITEM_CREATE)
         .withLatestFrom(this.state$)
         .filter(([, state]) => !state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -77,7 +77,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.LocalCreateAction(payload));
 
     @Effect() itemDeleteFirebase$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEM_DELETE)
+        .ofType(TodoActions.ActionTypes.ITEM_DELETE)
         .withLatestFrom(this.state$)
         .filter(([, state]) => state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -85,7 +85,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.FirebaseDeleteAction(payload));
 
     @Effect() itemDeleteLocal$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEM_DELETE)
+        .ofType(TodoActions.ActionTypes.ITEM_DELETE)
         .withLatestFrom(this.state$)
         .filter(([, state]) => !state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -93,7 +93,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.LocalDeleteAction(payload));
 
     @Effect() itemsReorderFirebase$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEMS_REORDER)
+        .ofType(TodoActions.ActionTypes.ITEMS_REORDER)
         .withLatestFrom(this.state$)
         .filter(([, state]) => state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -101,7 +101,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.FirebaseReorderListAction(payload));
 
     @Effect() itemsReorderLocal$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEMS_REORDER)
+        .ofType(TodoActions.ActionTypes.ITEMS_REORDER)
         .withLatestFrom(this.state$)
         .filter(([, state]) => !state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -109,7 +109,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.LocalReorderListAction(payload));
 
     @Effect() itemUpdateFirebase$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEM_UPDATE)
+        .ofType(TodoActions.ActionTypes.ITEM_UPDATE)
         .withLatestFrom(this.state$)
         .filter(([, state]) => state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -117,7 +117,7 @@ export class ToDoEffects {
         .map(payload => new TodoActions.FirebaseUpdateAction(payload));
 
     @Effect() itemUpdateLocal$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.ITEM_UPDATE)
+        .ofType(TodoActions.ActionTypes.ITEM_UPDATE)
         .withLatestFrom(this.state$)
         .filter(([, state]) => !state.appFirebase.isConnectedToFirebase)
         .map(([action]) => action)
@@ -125,31 +125,31 @@ export class ToDoEffects {
         .map(payload => new TodoActions.LocalUpdateAction(payload));
 
     @Effect() loadCollection$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.FIREBASE_LOAD)
+        .ofType(TodoActions.ActionTypes.FIREBASE_LOAD)
         .do(x => {
             console.log('Effect:loadCollection$:A', x);
         })
         // Watch database node and get items.
         .switchMap(x => this.todoDataService
             .getData()
-            .takeUntil(this.actions$.ofType(TodoActions.TodoActionTypes.FIREBASE_LOAD_CANCEL)))
+            .takeUntil(this.actions$.ofType(TodoActions.ActionTypes.FIREBASE_LOAD_CANCEL)))
         .do(x => { console.log('Effect:loadCollection$:B', x); })
         .map((items: ToDo[]) => new TodoActions.FirebaseLoadSuccessAction(items));
 
     @Effect({ dispatch: false }) firebaseCreate$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.FIREBASE_CREATE)
+        .ofType(TodoActions.ActionTypes.FIREBASE_CREATE)
         .map((action: TodoActions.FirebaseCreateAction) => {
             this.todoDataService.create(action.payload);
         });
 
     @Effect({ dispatch: false }) firebaseRemove$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.FIREBASE_DELETE)
+        .ofType(TodoActions.ActionTypes.FIREBASE_DELETE)
         .map((action: TodoActions.FirebaseDeleteAction) => {
             this.todoDataService.removeItem(action.payload);
         });
 
     @Effect({ dispatch: false }) firebaseReorderList$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.FIREBASE_REORDER_LIST)
+        .ofType(TodoActions.ActionTypes.FIREBASE_REORDER_LIST)
         .withLatestFrom(this.state$)
         .map(([action, state]) => ({ action: <TodoActions.FirebaseReorderListAction>action, state }))
         .map(x => {
@@ -158,7 +158,7 @@ export class ToDoEffects {
         });
 
     @Effect({ dispatch: false }) firebaseUpdate$ = this.actions$
-        .ofType(TodoActions.TodoActionTypes.FIREBASE_UPDATE)
+        .ofType(TodoActions.ActionTypes.FIREBASE_UPDATE)
         .map((action: TodoActions.FirebaseUpdateAction) => {
             this.todoDataService.update(action.payload);
         });

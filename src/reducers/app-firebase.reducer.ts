@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppFirebaseActions, AppFirebaseActionTypes } from '../actions/app-firebase.action';
+import * as appFirebaseAction from '../actions/app-firebase.action';
 
 import { assign } from '../utils/assign';
 
@@ -19,7 +19,7 @@ const initialState: State = {
 
 export function reducer(
     state = initialState,
-    action: AppFirebaseActions,
+    action: appFirebaseAction.Actions,
     ): State {
 
     switch (action.type) {
@@ -27,13 +27,13 @@ export function reducer(
             return state;
         }
 
-        case AppFirebaseActionTypes.FIREBASE_CONNECT: {
+        case appFirebaseAction.ActionTypes.FIREBASE_CONNECT: {
             return assign(state, {
                 isConnectingToFirebase: true
             });
         }
 
-        case AppFirebaseActionTypes.FIREBASE_CONNECT_SUCCESS: {
+        case appFirebaseAction.ActionTypes.FIREBASE_CONNECT_SUCCESS: {
             return assign(state, {
 
                 isConnectingToFirebase: false,
@@ -41,7 +41,7 @@ export function reducer(
             });
         }
 
-        case AppFirebaseActionTypes.FIREBASE_DISCONNECT_SUCCESS: {
+        case appFirebaseAction.ActionTypes.FIREBASE_DISCONNECT_SUCCESS: {
             return assign(state, {
                 isConnectingToFirebase: false,
                 isConnectedToFirebase: false
@@ -49,13 +49,13 @@ export function reducer(
             });
         }
 
-        case AppFirebaseActionTypes.FIREBASE_SYNC_SUCCESS: {
+        case appFirebaseAction.ActionTypes.FIREBASE_SYNC_SUCCESS: {
             return assign(state, {
                 offlineActions: []
             });
         }
 
-        case AppFirebaseActionTypes.CREATE_OFFLINE_ACTION: {
+        case appFirebaseAction.ActionTypes.CREATE_OFFLINE_ACTION: {
             let offlineAction: Action = action.payload;
 
             return assign(state, {
@@ -66,9 +66,9 @@ export function reducer(
 }
 
 export function getIsConnectedToFirebase(state$: Observable<State>) {
-  return state$.select(s => s.isConnectedToFirebase);
+  return state$.select(state => state.isConnectedToFirebase);
 }
 
 export function getIsConnectingToFirebase(state$: Observable<State>) {
-  return state$.select(s => s.isConnectingToFirebase);
+  return state$.select(state => state.isConnectingToFirebase);
 }

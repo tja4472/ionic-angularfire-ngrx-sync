@@ -24,19 +24,19 @@ export class AppFirebaseEffects {
     ) { }
 
     @Effect() firebaseConnect$ = this.actions$
-        .ofType(AppFirebaseActions.AppFirebaseActionTypes.FIREBASE_CONNECT)
+        .ofType(AppFirebaseActions.ActionTypes.FIREBASE_CONNECT)
         .do(x => {
             console.log('Effect:firebaseConnect$:A', x);
         })
         .map(() => new AppFirebaseActions.FirebaseConnectSuccessAction());
 
     @Effect() firebaseConnectSuccess$ = this.actions$
-        .ofType(AppFirebaseActions.AppFirebaseActionTypes.FIREBASE_CONNECT_SUCCESS)
+        .ofType(AppFirebaseActions.ActionTypes.FIREBASE_CONNECT_SUCCESS)
         .map(() => new AppFirebaseActions.FirebaseSyncAction());
 
 
     @Effect() firebaseSync$ = this.actions$
-        .ofType(AppFirebaseActions.AppFirebaseActionTypes.FIREBASE_SYNC)
+        .ofType(AppFirebaseActions.ActionTypes.FIREBASE_SYNC)
         .withLatestFrom(this.state$)
         .map(([, state]) => state.appFirebase.offlineActions)
         .mergeMap(offlineActions => {

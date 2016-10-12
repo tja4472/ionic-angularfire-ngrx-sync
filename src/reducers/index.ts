@@ -10,7 +10,7 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 import { combineReducers } from '@ngrx/store';
 //  error TS4023: Selector 
 // tslint:disable-next-line:no-unused-variable
-import { share, Selector } from '../utils/util';
+// import { share, Selector } from '../utils/util';
 
 import * as fromTodo from './todo.reducer';
 import * as fromAppFirebase from './app-firebase.reducer';
@@ -57,16 +57,16 @@ export function reducer(state: any, action: any) {
  * Selectors
  ***********/
 export function getAppFirebaseState(state$: Observable<State>) {
-  return state$.select(s => s.appFirebase);
+  return state$.select(state => state.appFirebase);
 }
 
-export const getAppFirebase_IsConnectedToFirebase = share(compose(fromAppFirebase.getIsConnectedToFirebase, getAppFirebaseState));
-export const getAppFirebase_IsConnectingToFirebase = share(compose(fromAppFirebase.getIsConnectingToFirebase, getAppFirebaseState));
+export const getAppFirebase_IsConnectedToFirebase = compose(fromAppFirebase.getIsConnectedToFirebase, getAppFirebaseState);
+export const getAppFirebase_IsConnectingToFirebase = compose(fromAppFirebase.getIsConnectingToFirebase, getAppFirebaseState);
 
 export function getTodoState(state$: Observable<State>) {
-  return state$.select(s => s.todo);
+  return state$.select(state => state.todo);
 }
 
-export const getTodo_Loaded = share(compose(fromTodo.getLoaded, getTodoState));
-export const getTodo_Loading = share(compose(fromTodo.getLoading, getTodoState));
-export const getTodo_Todos = share(compose(fromTodo.getTodos, getTodoState));
+export const getTodo_Loaded = compose(fromTodo.getLoaded, getTodoState);
+export const getTodo_Loading = compose(fromTodo.getLoading, getTodoState);
+export const getTodo_Todos = compose(fromTodo.getTodos, getTodoState);

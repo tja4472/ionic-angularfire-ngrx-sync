@@ -1,52 +1,52 @@
 import { Action } from '@ngrx/store';
-import { label } from '../utils/util';
+import { type } from '../utils/util';
 
-export const AppFirebaseActionTypes = {
-    CREATE_OFFLINE_ACTION: label('[AppFirebase] Create Offline Action'),
-    FIREBASE_CONNECT: label('[AppFirebase] Firebase Connect'),
-    FIREBASE_CONNECT_SUCCESS: label('[AppFirebase] Firebase Connect Success'),
-    FIREBASE_DISCONNECT_SUCCESS: label('[AppFirebase] Firebase Disconnect Success'),
-    FIREBASE_SYNC: label('[AppFirebase] Firebase Sync'),
-    FIREBASE_SYNC_SUCCESS: label('[AppFirebase] Firebase Sync Success'),
+export const ActionTypes = {
+    CREATE_OFFLINE_ACTION: type('[AppFirebase] Create Offline Action'),
+    FIREBASE_CONNECT: type('[AppFirebase] Firebase Connect'),
+    FIREBASE_CONNECT_SUCCESS: type('[AppFirebase] Firebase Connect Success'),
+    FIREBASE_DISCONNECT_SUCCESS: type('[AppFirebase] Firebase Disconnect Success'),
+    FIREBASE_SYNC: type('[AppFirebase] Firebase Sync'),
+    FIREBASE_SYNC_SUCCESS: type('[AppFirebase] Firebase Sync Success'),
 }
 
 export class CreateOfflineAction implements Action {
-    type = AppFirebaseActionTypes.CREATE_OFFLINE_ACTION;
+    type = ActionTypes.CREATE_OFFLINE_ACTION;
 
     constructor(public payload: Action) { }
 }
 
 export class FirebaseConnectAction implements Action {
-    type = AppFirebaseActionTypes.FIREBASE_CONNECT;
+    type = ActionTypes.FIREBASE_CONNECT;
 
     constructor() { }
 }
 
 export class FirebaseConnectSuccessAction implements Action {
-    type = AppFirebaseActionTypes.FIREBASE_CONNECT_SUCCESS;
+    type = ActionTypes.FIREBASE_CONNECT_SUCCESS;
 
     constructor() { }
 }
 
 export class FirebaseDisconnectSuccessAction implements Action {
-    type = AppFirebaseActionTypes.FIREBASE_DISCONNECT_SUCCESS;
+    type = ActionTypes.FIREBASE_DISCONNECT_SUCCESS;
 
     constructor() { }
 }
 
 export class FirebaseSyncAction implements Action {
-    type = AppFirebaseActionTypes.FIREBASE_SYNC;
+    type = ActionTypes.FIREBASE_SYNC;
 
     constructor() { }
 }
 
 export class FirebaseSyncSuccessAction implements Action {
-    type = AppFirebaseActionTypes.FIREBASE_SYNC_SUCCESS;
+    type = ActionTypes.FIREBASE_SYNC_SUCCESS;
 
     constructor() { }
 }
 
-export type AppFirebaseActions =
+export type Actions =
     CreateOfflineAction |
     FirebaseConnectAction |
     FirebaseConnectSuccessAction |

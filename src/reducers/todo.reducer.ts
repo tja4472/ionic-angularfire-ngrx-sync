@@ -1,7 +1,7 @@
 // import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { TodoActions, TodoActionTypes } from '../actions/todo.action';
+import * as todoAction from '../actions/todo.action';
 import { ToDo } from '../models/todo';
 import { assign } from '../utils/assign';
 import { reorderArray } from 'ionic-angular';
@@ -22,16 +22,16 @@ const initialState: State = {
 
 export function reducer (
     state = initialState,
-    action: TodoActions,
+    action: todoAction.Actions,
     ): State {
     switch (action.type) {
-        case TodoActionTypes.FIREBASE_LOAD: {
+        case todoAction.ActionTypes.FIREBASE_LOAD: {
             return assign(state, {
                 loading: true
             });
         }
 
-        case TodoActionTypes.FIREBASE_LOAD_SUCCESS: {
+        case todoAction.ActionTypes.FIREBASE_LOAD_SUCCESS: {
             const items: ToDo[] = action.payload;
 
             return assign(state, {
@@ -43,7 +43,7 @@ export function reducer (
         }
 
         // http://bodiddlie.github.io/ng-2-toh-with-ngrx-suite/
-        case TodoActionTypes.LOCAL_CREATE: {
+        case todoAction.ActionTypes.LOCAL_CREATE: {
             const item: ToDo = assign(action.payload, {});
 //            item.$key = '##' + Math.random().toString();
            // item.$key = database().ref().push().key;
@@ -58,7 +58,7 @@ export function reducer (
             });
         }
 
-        case TodoActionTypes.LOCAL_REORDER_LIST: {
+        case todoAction.ActionTypes.LOCAL_REORDER_LIST: {
             const indexes = action.payload; // .indexes;
             const reorderedTodos = [...state.todos];
             reorderArray(reorderedTodos, indexes);
@@ -80,7 +80,7 @@ export function reducer (
             });
         }
 
-        case TodoActionTypes.LOCAL_UPDATE: {
+        case todoAction.ActionTypes.LOCAL_UPDATE: {
             const item: ToDo = action.payload;
 
             item._isDirty = true;
@@ -104,7 +104,7 @@ export function reducer (
             });
         }
 
-        case TodoActionTypes.LOCAL_DELETE: {
+        case todoAction.ActionTypes.LOCAL_DELETE: {
             const key: string = action.payload;
             let index = state.todos.findIndex(x => x.$key === key);
             let item = assign(state.todos[index], {});
@@ -167,13 +167,13 @@ export function reducer (
 // Selectors
 // =========
 export function getLoaded(state$: Observable<State>) {
-  return state$.select(s => s.loaded);
+  return state$.select(state => state.loaded);
 }
 
 export function getLoading(state$: Observable<State>) {
-  return state$.select(s => s.loading);
+  return state$.select(state => state.loading);
 }
 
 export function getTodos(state$: Observable<State>) {
-  return state$.select(s => s.todos);
+  return state$.select(state => state.todos);
 }
