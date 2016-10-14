@@ -27,7 +27,7 @@ import { MyFirebaseAppConfig } from './my-firebase-app-config';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { reducer } from '../reducers';
+import { reducer } from '../reducers/index';
 
 import { AppFirebaseEffects } from '../effects/app-firebase.effect';
 import { ToDoEffects } from '../effects/todo.effect';
