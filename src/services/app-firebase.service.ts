@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import * as FromRoot from '../reducers/index';
+import * as FromRoot from '../reducers';
 import * as AppFirebaseActions from '../actions/app-firebase.action';
 
 import { AngularFire } from 'angularfire2';

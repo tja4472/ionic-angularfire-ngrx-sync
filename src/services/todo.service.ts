@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Indexes } from '../models/indexes';
 import { ToDo } from '../models/todo';
 
-import * as FromRootReducer from '../reducers/index';
+import * as FromRootReducer from '../reducers';
 import * as TodoActions from '../actions/todo.action';
 
 // import { TodoSelector} from '../selectors';
