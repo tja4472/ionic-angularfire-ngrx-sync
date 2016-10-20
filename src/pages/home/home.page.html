@@ -21,7 +21,7 @@
 <ion-content>
   <todo-list 
       [todos]="todos$ | async" 
-      (addItem)="addItem($event)"     
+      (addItem)="addItem()"     
       (editItem)="editItem($event)"
       (reorderItems)="reorderItems($event)"
       (removeItem)="removeItem($event)"      

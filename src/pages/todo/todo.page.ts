@@ -4,7 +4,7 @@ import { NavParams, ViewController } from 'ionic-angular';
 // import { TodoService } from '../../services/todo.service';
 // import { ItemSelectedOutput, ReorderItemsOutput, TodosInput, TodoListComponent } from '../../components/todo-list/todo-list.component';
 import { ToDo } from '../../models/todo';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 // import { ControlMessages } from '../../components/control-messages/control-messages.component';
 import { assign } from '../../utils/assign';
 
@@ -13,7 +13,7 @@ import { assign } from '../../utils/assign';
   templateUrl: 'todo.page.html'
 })
 export class TodoPage {
-  public todoForm: FormGroup;
+  public todoForm;
 
   private todo: ToDo =
   {
