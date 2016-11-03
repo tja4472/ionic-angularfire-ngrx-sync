@@ -18,10 +18,6 @@ import { ValidationService } from '../services/validation.service';
 
 import { AngularFire, AngularFireModule } from 'angularfire2';
 
-// Bodge: error TS2503: Cannot find namespace 'firebase'.
-// tslint:disable-next-line:no-unused-variable
-import * as firebase from 'firebase';
-
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
 import { EffectsModule } from '@ngrx/effects';
