@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
 
 import * as appFirebaseAction from '../actions/app-firebase.action';
 
@@ -65,10 +64,5 @@ export function reducer(
     }
 }
 
-export function getIsConnectedToFirebase(state$: Observable<State>) {
-  return state$.select(state => state.isConnectedToFirebase);
-}
-
-export function getIsConnectingToFirebase(state$: Observable<State>) {
-  return state$.select(state => state.isConnectingToFirebase);
-}
+export const getIsConnectedToFirebase = (state: State) => state.isConnectedToFirebase;
+export const getIsConnectingToFirebase = (state: State) => state.isConnectingToFirebase;

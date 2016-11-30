@@ -1,23 +1,13 @@
-import '@ngrx/core/add/operator/select';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/let';
-import { Observable } from 'rxjs/Observable';
+import { createSelector } from 'reselect';
 import { ActionReducer } from '@ngrx/store';
 import { compose } from '@ngrx/core/compose';
 import { storeLogger } from 'ngrx-store-logger';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { combineReducers } from '@ngrx/store';
-//  error TS4023: Selector 
-// tslint:disable-next-line:no-unused-variable
-// import { share, Selector } from '../utils/util';
 
 import * as fromTodo from './todo.reducer';
 import * as fromAppFirebase from './app-firebase.reducer';
-
-//  error TS4023: Selector 
-// tslint:disable-next-line:no-unused-variable
-import { ToDo } from '../models/todo';
 
 export interface State {
   // These property names have to match those in the compose.
@@ -56,17 +46,15 @@ export function reducer(state: any, action: any) {
 /***********
  * Selectors
  ***********/
-export function getAppFirebaseState(state$: Observable<State>) {
-  return state$.select(state => state.appFirebase);
-}
+// appFirebase
+export const getAppFirebaseState = (state: State) => state.appFirebase;
 
-export const getAppFirebase_IsConnectedToFirebase = compose(fromAppFirebase.getIsConnectedToFirebase, getAppFirebaseState);
-export const getAppFirebase_IsConnectingToFirebase = compose(fromAppFirebase.getIsConnectingToFirebase, getAppFirebaseState);
+export const getAppFirebase_IsConnectedToFirebase = createSelector(getAppFirebaseState, fromAppFirebase.getIsConnectedToFirebase);
+export const getAppFirebase_IsConnectingToFirebase = createSelector(getAppFirebaseState, fromAppFirebase.getIsConnectingToFirebase);
+//
+// todo
+export const getTodoState = (state: State) => state.todo;
 
-export function getTodoState(state$: Observable<State>) {
-  return state$.select(state => state.todo);
-}
-
-export const getTodo_Loaded = compose(fromTodo.getLoaded, getTodoState);
-export const getTodo_Loading = compose(fromTodo.getLoading, getTodoState);
-export const getTodo_Todos = compose(fromTodo.getTodos, getTodoState);
+export const getTodo_Loaded = createSelector(getTodoState, fromTodo.getLoaded);
+export const getTodo_Loading = createSelector(getTodoState, fromTodo.getLoading);
+export const getTodo_Todos = createSelector(getTodoState, fromTodo.getTodos);

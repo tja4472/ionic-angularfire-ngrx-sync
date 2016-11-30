@@ -30,6 +30,6 @@ export class AppFirebaseService {
     }
 
     isConnectedToFirebase(): Observable<boolean> {
-        return this.store.let(FromRoot.getAppFirebase_IsConnectedToFirebase);
+        return this.store.select(FromRoot.getAppFirebase_IsConnectedToFirebase);
     }
 }

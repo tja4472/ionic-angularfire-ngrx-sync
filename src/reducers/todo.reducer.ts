@@ -1,6 +1,3 @@
-// import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-
 import * as todoAction from '../actions/todo.action';
 import { ToDo } from '../models/todo';
 import { assign } from '../utils/assign';
@@ -166,14 +163,6 @@ export function reducer (
 // =========
 // Selectors
 // =========
-export function getLoaded(state$: Observable<State>) {
-  return state$.select(state => state.loaded);
-}
-
-export function getLoading(state$: Observable<State>) {
-  return state$.select(state => state.loading);
-}
-
-export function getTodos(state$: Observable<State>) {
-  return state$.select(state => state.todos);
-}
+export const getLoaded = (state: State) => state.loaded;
+export const getLoading = (state: State) => state.loading;
+export const getTodos = (state: State) => state.todos;
