@@ -21,7 +21,7 @@ const reducers = {
 };
 
 const developmentReducer: ActionReducer<State> = compose(
-  localStorageSync(['todo'], true),
+  localStorageSync(['todo', 'appFirebase'], true),
   storeFreeze,
   storeLogger(),
   combineReducers)(reducers);

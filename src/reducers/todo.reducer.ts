@@ -78,24 +78,24 @@ export function reducer (
         }
 
         case todoAction.ActionTypes.LOCAL_UPDATE: {
-            const item: ToDo = action.payload;
+//            const updatedItem = assign(action.payload, {});
+            let updatedItem = assign(action.payload, {});
+            updatedItem._isDirty = true;
 
-            item._isDirty = true;
-
-            if (item._isCreated) {
-                item._isUpdated = false;
+            if (updatedItem._isCreated) {
+                updatedItem._isUpdated = false;
             } else {
-                item._isUpdated = true;
+                updatedItem._isUpdated = true;
             }
 
-            let index = state.todos.findIndex(x => x.$key === item.$key);
+            let index = state.todos.findIndex(x => x.$key === updatedItem.$key);
 
             return assign(state, {
                 loading: false,
                 loaded: true,
                 todos: [
                     ...state.todos.slice(0, index),
-                    item,
+                    updatedItem,
                     ...state.todos.slice(index + 1)
                 ]
             });

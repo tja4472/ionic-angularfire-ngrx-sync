@@ -39,6 +39,9 @@
     "typescript": "2.0.10"
   },
   "description": "my-side-menu: An Ionic project", 
+  "config": {
+    "ionic_source_map": "source-map"
+  },  
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
